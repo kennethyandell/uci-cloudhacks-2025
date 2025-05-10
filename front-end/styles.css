@@ -46,6 +46,10 @@ body {
 .sidebar .menu-item:first-child { margin-left: 0; }
 .sidebar .menu-item:last-child  { margin-right: 0; }
 
+#menu-icon {
+	font-size: 25px;
+}
+
 .sidebar .menu-item:hover {
   background: #ccc;
 }
