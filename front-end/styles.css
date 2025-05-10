@@ -19,7 +19,7 @@ body {
 
 /* Left pane (sidebar) */
 .sidebar {
-	flex: 0 0 30%;        /* do not grow or shrink, width = 30% of container */
+	flex: 0 0 20%;        /* do not grow or shrink, width = 30% of container */
     background: #f0f0f0;
     padding: 20px;
     border-radius: 8px;
