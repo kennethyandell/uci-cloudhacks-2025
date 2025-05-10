@@ -1,0 +1,36 @@
+/* Reset some default spacing */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial, sans-serif;
+}
+
+/* Container sets up the side-by-side layout */
+.container {
+	display: flex;
+	gap: 20px;            /* space between the two divs */
+	margin: 10vh; 
+    height: 75vh;        /* overall margin around both panes */
+}
+
+/* Left pane (sidebar) */
+.sidebar {
+	flex: 0 0 30%;        /* do not grow or shrink, width = 30% of container */
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Right pane (main content) */
+.main-content {
+    flex: 1;              /* take up remaining space */
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
