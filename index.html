@@ -3,26 +3,48 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Two-Pane Layout</title>
+    <title>Two-Pane Layout with Sidebar “Pages”</title>
     <link rel="stylesheet" href="front-end/styles.css" />
 </head>
 <body>
     <div class="container">
     <div class="sidebar">
+
+        <!-- MENU BAR -->
         <div class="menu-bar">
-            <div class="menu-item" id="menu1">Create Mode</div>
-            <div class="menu-item" id="menu2">Generate Mode</div>
-            <div class="menu-item" id="menu3">Draw Mode</div>
+        <div class="menu-item" data-page="page1" id="menu1">Create Mode</div>
+        <div class="menu-item" data-page="page2" id="menu2">Generate Mode</div>
+        <div class="menu-item" data-page="page3" id="menu3">Draw Mode</div>
         </div>
-      <h2>Sidebar</h2>
-      <p>This is the smaller, left pane.</p>
-    </div>
+
+        <!-- SIDEBAR “PAGES” -->
+        <div class="sidebar-page active" id="page1">
+        <h2>Create Mode</h2>
+        <p>Here you can set up new items...</p>
+        <!-- more Create Mode content -->
+        </div>
+
+        <div class="sidebar-page" id="page2">
+        <h2>Generate Mode</h2>
+        <p>Here you can generate reports...</p>
+        <!-- more Generate Mode content -->
+        </div>
+
+        <div class="sidebar-page" id="page3">
+        <h2>Draw Mode</h2>
+        <p>Adjust your preferences here...</p>
+        <!-- more Settings content -->
+        </div>
+
+    </div><!-- /.sidebar -->
+
     <div class="main-content">
-      <h1>Main Area</h1>
-      <p>This is the larger, right pane.</p>
-      <button id="actionBtn">Click Me</button>
+        <h1>Main Area</h1>
+        <p>This is the larger, right pane.</p>
+        <button id="actionBtn">Click Me</button>
     </div>
-    </div>
+    </div><!-- /.container -->
+
     <script src="front-end/scripts.js"></script>
 </body>
 </html>

@@ -58,3 +58,18 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
+/* Hide all pages by default */
+.sidebar-page {
+  display: none;
+}
+
+/* Only the active page shows */
+.sidebar-page.active {
+  display: block;
+}
+
+/* Optional: some spacing inside each page */
+.sidebar-page {
+  margin-top: 10px;
+}
