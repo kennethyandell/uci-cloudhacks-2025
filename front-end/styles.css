@@ -62,6 +62,7 @@ body {
 /* Hide all pages by default */
 .sidebar-page {
   display: none;
+  margin-top: 10px;
 }
 
 /* Only the active page shows */
@@ -69,7 +70,29 @@ body {
   display: block;
 }
 
-/* Optional: some spacing inside each page */
-.sidebar-page {
-  margin-top: 10px;
+.subpage-btn {
+  display: block;
+  width: 80%;               /* size within sidebar */
+  margin: 20px auto;        /* vertical spacing + centered */
+  padding: 10px 0;          /* pill shape */
+  border: none;
+  border-radius: 999px;     /* fully rounded */
+  background: #ddd;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.subpage-btn:hover {
+  background: #ccc;
+}
+
+.subpage-input {
+  display: block;
+  width: 80%;
+  margin: 10px auto 30px;   /* a bit of space below */
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  font-size: 0.95rem;
 }
