@@ -44,7 +44,7 @@ function onOrganizeIdeas(evt) {
 }
 
 function requestGenerateIdea() {
-    const apiUrl = "https://qz31d41psl.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude";
+    const apiUrl = "https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude";
     const data = {}
     const requestOptions = {
         method: 'POST',
