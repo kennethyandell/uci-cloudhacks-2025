@@ -63,8 +63,7 @@ function requestGenerateIdea() {
             return response.json();
         })
         .then(data => {
-            outputElement.textContent = JSON.stringify(data, null, 2);
-            console.log(outputElement)
+            console.log(JSON.stringify(data, null, 2))
         })
 }
 
