@@ -76,15 +76,17 @@ document.querySelectorAll('.menu-item').forEach(item => {
     if (page) page.classList.add('active');
   });
 });
-
+// 1) Replace createStickyNote() with this:
 function createStickyNote() {
   const note = document.createElementNS(SVG_NS, 'svg');
-  note.setAttribute('class', 'sticky-note');
-  note.setAttribute('x', 50);  // initial position
+  note.classList.add('sticky-note');
+  note.setAttribute('x', 50);   // initial position
   note.setAttribute('y', 50);
   note.setAttribute('width', 150);
   note.setAttribute('height', 150);
+  note.style.pointerEvents = 'all';
 
+  // background rectangle
   const rect = document.createElementNS(SVG_NS, 'rect');
   rect.setAttribute('width', 150);
   rect.setAttribute('height', 150);
@@ -92,9 +94,79 @@ function createStickyNote() {
   rect.setAttribute('stroke', '#fbc02d');
   note.appendChild(rect);
 
+  // placeholder SVG <text> for displaying note text
+  const textEl = document.createElementNS(SVG_NS, 'text');
+  textEl.setAttribute('x', 10);
+  textEl.setAttribute('y', 20);
+  textEl.setAttribute('font-size', '14');
+  textEl.setAttribute('fill', '#000');
+  note.appendChild(textEl);
+
+  // on double-click, open the HTML editor
+  note.addEventListener('dblclick', () => openNoteEditor(note));
+
   canvas.appendChild(note);
   makeDraggable(note);
 }
+
+addBtn.addEventListener('click', createStickyNote);
+
+
+// 2) Add this helper below:
+function openNoteEditor(note) {
+  const container = document.querySelector('.main-content');
+  const noteRect  = note.getBoundingClientRect();
+  const contRect  = container.getBoundingClientRect();
+
+  // create a <textarea> over the note
+  const ta = document.createElement('textarea');
+  ta.value = note.getAttribute('data-text') || '';
+  Object.assign(ta.style, {
+    position:   'absolute',
+    left:       `${noteRect.left - contRect.left}px`,
+    top:        `${noteRect.top  - contRect.top }px`,
+    width:      `${noteRect.width}px`,
+    height:     `${noteRect.height}px`,
+    fontSize:   '14px',
+    resize:     'none',
+    padding:    '4px',
+    boxSizing:  'border-box',
+    border:     '1px solid #fbc02d',
+    background: '#fff59d',
+    zIndex:     1000,
+  });
+
+  container.appendChild(ta);
+  ta.focus();
+
+  // When done editing (blur or Enter), write back and remove the textarea
+  function finish() {
+    const text = ta.value.trim();
+    note.setAttribute('data-text', text);
+
+    // update SVG <text> display with line breaks
+    const textEl = note.querySelector('text');
+    while (textEl.firstChild) textEl.removeChild(textEl.firstChild);
+    text.split('\n').forEach((line, i) => {
+      const tspan = document.createElementNS(SVG_NS, 'tspan');
+      tspan.setAttribute('x', 10);
+      tspan.setAttribute('dy', i === 0 ? '0' : '1.2em');
+      tspan.textContent = line;
+      textEl.appendChild(tspan);
+    });
+
+    container.removeChild(ta);
+  }
+
+  ta.addEventListener('blur', finish);
+  ta.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      ta.blur();
+    }
+  });
+}
+
 
 addBtn.addEventListener('click', createStickyNote);
 
