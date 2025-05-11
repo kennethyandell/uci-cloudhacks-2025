@@ -111,11 +111,13 @@ body {
 .subpage-input {
   display: block;
   width: calc(100% - 20px);
+  height: 100px;
   margin: 10px auto 30px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 0.95rem;
+  text-wrap: auto;
 }
 
 /* Main content */

@@ -61,8 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // — Subpage button handlers —
   document.getElementById('generateIdeaBtn').addEventListener('click', onGenerateIdea);
-  document.getElementById('guideMeBtn').addEventListener('click', onGuideMe);
-  document.getElementById('organizeIdeasBtn').addEventListener('click', onOrganizeIdeas);
 });
 
 // Placeholder logic—swap in your real implementations:
