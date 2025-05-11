@@ -1,4 +1,50 @@
 const SVG_NS = 'http://www.w3.org/2000/svg';
+function wrapTextGreedy(text, maxCharsPerLine) {
+  const words = text.split(/\s+/);
+  const lines = [];
+  let line = '';
+
+  words.forEach(word => {
+    const test = line ? line + ' ' + word : word;
+    if (test.length <= maxCharsPerLine) {
+      line = test;
+    } else {
+      if (line) lines.push(line);
+      line = word.length > maxCharsPerLine
+        ? word.slice(0, maxCharsPerLine)  // force-break very long words
+        : word;
+    }
+  });
+
+  if (line) lines.push(line);
+  return lines;
+}
+/**
+ * Given an SVG note and raw text, find the largest integer fontSize
+ * such that all wrapped lines fit within the note’s width/height.
+ */
+function fitTextToNote(note, rawText) {
+  const rectW = +note.getAttribute('width');
+  const rectH = +note.getAttribute('height');
+  const padding = 10;             // px inset inside the note
+  let fontSize = 16;              // start a bit larger
+  let lines, lineHeight;
+
+  do {
+    // estimate max chars per line (approx 0.6*fontSize pixels per char)
+    const maxChars  = Math.floor((rectW - padding*2) / (fontSize * 0.6));
+    lines           = wrapTextGreedy(rawText, maxChars);
+    lineHeight      = fontSize * 1.2;
+    // shrink font if total height exceeds available space
+    if (lines.length * lineHeight > (rectH - padding*2)) {
+      fontSize--;
+    } else {
+      break;
+    }
+  } while (fontSize >= 8);
+
+  return { fontSize, lines, lineHeight, padding };
+}
 const canvas = document.getElementById('canvas-svg');
 const addBtn = document.getElementById('add-note-btn');
 document.addEventListener('DOMContentLoaded', () => {
@@ -141,22 +187,29 @@ function openNoteEditor(note) {
 
   // When done editing (blur or Enter), write back and remove the textarea
   function finish() {
-    const text = ta.value.trim();
-    note.setAttribute('data-text', text);
+  const text = ta.value.trim();
+  note.setAttribute('data-text', text);
 
-    // update SVG <text> display with line breaks
-    const textEl = note.querySelector('text');
-    while (textEl.firstChild) textEl.removeChild(textEl.firstChild);
-    text.split('\n').forEach((line, i) => {
-      const tspan = document.createElementNS(SVG_NS, 'tspan');
-      tspan.setAttribute('x', 10);
-      tspan.setAttribute('dy', i === 0 ? '0' : '1.2em');
-      tspan.textContent = line;
-      textEl.appendChild(tspan);
-    });
+  // 1) Compute best font & wrapping
+  const { fontSize, lines, lineHeight, padding } = fitTextToNote(note, text);
 
-    container.removeChild(ta);
-  }
+  // 2) Update the SVG <text> element
+  const textEl = note.querySelector('text');
+  textEl.setAttribute('font-size', fontSize);
+  // clear old content
+  while (textEl.firstChild) textEl.removeChild(textEl.firstChild);
+  // paint new lines
+  lines.forEach((line, i) => {
+    const tspan = document.createElementNS(SVG_NS, 'tspan');
+    tspan.setAttribute('x', padding);
+    tspan.setAttribute('dy', i === 0 ? `${fontSize}` : `${lineHeight}`);
+    tspan.textContent = line;
+    textEl.appendChild(tspan);
+  });
+
+  // 3) Tear down the editor overlay
+  container.removeChild(ta);
+}
 
   ta.addEventListener('blur', finish);
   ta.addEventListener('keydown', e => {
