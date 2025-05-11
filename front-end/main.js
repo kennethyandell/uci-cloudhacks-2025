@@ -112,6 +112,7 @@ function requestGenerateIdea(prompt) {
       // Now re-bind the dblclick editor for each loaded note:
       canvas.querySelectorAll('.sticky-note').forEach(note => {
         note.addEventListener('dblclick', () => openNoteEditor(note));
+        makeDraggable(note);
     });
     })
     .catch(err => console.error('API error:', err));
