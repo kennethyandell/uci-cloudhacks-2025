@@ -1,4 +1,54 @@
 // main.js
+// At the top of main.js (or above any DOM-ready code):
+// ───────────────────────────────────────────────────
+// Arrays for storing chat history:
+const userMessages = [];    // ← all user-typed messages
+const aiMessages   = [];    // ← all AI replies
+const allMessages  = [];    // ← interleaved { sender, text } records
+
+// Utility to render into the chat box:
+function renderMessage(sender, text) {
+  const container = document.getElementById('chatMessages');
+  const msgEl = document.createElement('div');
+  msgEl.className = `chat-message ${sender}`;  // CSS hooks if you want to style
+  msgEl.textContent = text;
+  container.appendChild(msgEl);
+  container.scrollTop = container.scrollHeight;  // auto-scroll down
+}
+
+// Call this when you have an AI response ready:
+// ───────────────────────────────────────────────────
+function addAIMessage(text) {
+  // 1) store in arrays
+  aiMessages.push(text);                        // ← stored in aiMessages
+  allMessages.push({ sender: 'ai', text });     // ← stored in allMessages
+  // 2) render to UI
+  renderMessage('ai', text);
+}
+
+
+// Hook up your “Send” button:
+// ───────────────────────────────────────────────────
+document.getElementById('sendChatBtn').addEventListener('click', () => {
+  const inputEl = document.getElementById('chatInput');
+  const text = inputEl.value.trim();
+  if (!text) return;
+
+  // 1) store user text
+  userMessages.push(text);                      // ← stored in userMessages
+  allMessages.push({ sender: 'user', text });   // ← stored in allMessages
+
+  // 2) render to UI
+  renderMessage('user', text);
+
+  // 3) clear input
+  inputEl.value = '';
+
+  // 4) YOUR CHATBOT INTEGRATION:
+  //    call your bot here, then when it responds do:
+  //      addAIMessage(botReply);
+});
+
 document.addEventListener('DOMContentLoaded', () => {
   // — Sidebar tab switching —
   const menuItems = document.querySelectorAll('.sidebar .menu-item');

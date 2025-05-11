@@ -172,7 +172,12 @@ body {
   flex: 1;
   padding: 10px;
   overflow-y: auto;
+  display:flex; 
+  flex-direction:column;
 }
+.chat-message { margin:8px; padding:8px 12px; border-radius:6px; max-width:70%; }
+.chat-message.user { background:#e1f5fe; align-self:flex-end; }
+.chat-message.ai   { background:#f1f1f1; align-self:flex-start; }
 
 /* Chat input */
 .chat-input-container {
