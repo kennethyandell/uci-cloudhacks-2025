@@ -120,6 +120,9 @@ body {
   text-wrap: auto;
 }
 
+hr.solid {
+  border-top: 8px solid #efefef10;
+}
 /* Main content */
 .main-content {
   position: relative;
