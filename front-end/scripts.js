@@ -50,7 +50,7 @@ function requestGenerateIdea() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': "em400q21z9.execute-api.us-west-2.amazonaws.com",
+            'Access-Control-Allow-Origin': "https://main.d1zfh5jl8g0um5.amplifyapp.com/",
         },
         body: JSON.stringify(data),
     }
