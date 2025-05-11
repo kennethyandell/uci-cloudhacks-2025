@@ -1,61 +1,69 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Two-Pane Layout with Sidebar “Pages”</title>
-    <link rel="stylesheet" href="front-end/styles.css" />
-    <script src="https://kit.fontawesome.com/990faa84e8.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Two-Pane Layout with Sidebar “Pages”</title>
+  <link rel="stylesheet" href="front-end/styles.css" />
+  <script src="https://kit.fontawesome.com/990faa84e8.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
+  <div class="container">
     <div class="sidebar">
 
-        <!-- MENU BAR -->
-        <div class="menu-bar">
-        <div class="menu-item" data-page="page1" id="menu1"><i id="menu-icon" class="fa-solid fa-message"></i></div>
-        <div class="menu-item" data-page="page2" id="menu2"><i id="menu-icon" class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <div class="menu-item" data-page="page3" id="menu3"><i id="menu-icon" class="fa-solid fa-pen"></i></div>
-        </div>
+      <!-- MENU BAR -->
+      <div class="menu-bar">
+        <div class="menu-item" data-page="page1"><i class="fa-solid fa-message"></i></div>
+        <div class="menu-item" data-page="page2"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="menu-item" data-page="page3"><i class="fa-solid fa-pen"></i></div>
+      </div>
 
-        <!-- SIDEBAR “PAGES” -->
-        <div class="sidebar-page active" id="page1">
+      <!-- CREATE MODE (barebones chatbox) -->
+      <div class="sidebar-page active" id="page1">
         <h2>Create Mode</h2>
-        <p>Here you can set up new items...</p>
-        <input type="text" class="subpage-input" />
-        <!-- more Create Mode content -->
+        <div class="chatbox">
+          <div class="chat-container">
+            <!-- Empty message area for future injection -->
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <!-- Fixed input at bottom -->
+            <div class="chat-input-container">
+              <input
+                type="text"
+                id="chatInput"
+                class="chat-input"
+                placeholder="Type a message…"
+              />
+              <button id="sendChatBtn" class="chat-send-btn">Send</button>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="sidebar-page" id="page2">
-            <h2>Generate Mode</h2>
+      <!-- GENERATE MODE -->
+      <div class="sidebar-page" id="page2">
+        <h2>Generate Mode</h2>
+        <button class="subpage-btn" id="generateIdeaBtn">Generate Idea</button>
+        <input class="subpage-input" placeholder="Type your idea prompt…" />
+        <button class="subpage-btn"  id=guideMeBtn>Guide Me</button>
+        <button class="subpage-btn"id="organizeIdeasBtn">Organize Ideas</button>
+      </div>
 
-            <!-- Top: Generate Idea + text input -->
-            <button class="subpage-btn" id="generateIdeaBtn">Generate Idea</button>
-            <input type="text" class="subpage-input" id="generateInput"
-                placeholder="Type your idea prompt…" />
-
-            <!-- Middle spacer and Guide Me button -->
-            <button class="subpage-btn" id="guideMeBtn">Guide Me</button>
-
-            <!-- Bottom spacer and Organize Ideas button -->
-            <button class="subpage-btn" id="organizeIdeasBtn">Organize Ideas</button>
-        </div>
-
-        <div class="sidebar-page" id="page3">
+      <!-- DRAW MODE -->
+      <div class="sidebar-page" id="page3">
         <h2>Draw Mode</h2>
-        <p>Adjust your preferences here...</p>
-        <!-- more Settings content -->
-        </div>
-
-    </div><!-- /.sidebar -->
+        <p>Adjust your preferences here…</p>
+      </div>
+    </div>
 
     <div class="main-content">
-        <h1>Main Area</h1>
-        <p>This is the larger, right pane.</p>
-        <button id="actionBtn">Click Me</button>
+      <h1>Main Area</h1>
+      <p>This is the larger, right pane.</p>
+      <button id="actionBtn">Click Me</button>
     </div>
-    </div><!-- /.container -->
+  </div>
 
-    <script src="front-end/scripts.js"></script>
+  <script src="front-end/scripts.js"></script>
 </body>
 </html>
