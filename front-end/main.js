@@ -37,15 +37,18 @@ function onOrganizeIdeas(evt) {
 }
 
 function requestGenerateIdea(prompt) {
-  const apiUrl = 'https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude';
-  const data = { prompt };
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
-      'Access-Control-Request-Method': '*'
+    const whiteBoard = document.getElementById('canvas-svg')
+    const apiUrl = 'https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude';
+    const data = {
+        "whiteboard": whiteBoard
+    };
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
+            'Access-Control-Request-Method': '*'
     },
     body: JSON.stringify(data)
   };
