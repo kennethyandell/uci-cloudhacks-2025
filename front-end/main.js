@@ -85,7 +85,8 @@ function requestGenerateIdea(prompt) {
     const whiteBoard = document.getElementById('canvas-svg').outerHTML
     const apiUrl = 'https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude';
     const data = {
-        "whiteboard": whiteBoard
+        "whiteboard": whiteBoard,
+        "prompt": prompt
     };
     const requestOptions = {
         method: 'POST',
