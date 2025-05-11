@@ -101,8 +101,15 @@ function requestGenerateIdea(prompt) {
   console.log(data)
   fetch(apiUrl, requestOptions)
     .then(res => res.json())
-    .then(json => console.log('API response:', json))
+    .then(json => {
+      const output = json
+    })
     .catch(err => console.error('API error:', err));
+  
+    document.getElementById('canvas-svg').outerHTML = output
+
+  
+
 }
 const LAMBDA_URL = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
 async function chatBoxUse() {
