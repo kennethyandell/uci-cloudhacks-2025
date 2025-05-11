@@ -35,6 +35,7 @@ document.getElementById('sendChatBtn').addEventListener('click', async () => {
   if (!text) return;
 
   // store & render user text
+  userInput = text
   userMessages.push(text);
   allMessages.push({ sender: 'user', text });
   renderMessage('user', text);
@@ -129,6 +130,7 @@ async function chatBoxUse() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        userInput,
         userMessages,   // ← your array of user texts
         allMessages,    // ← interleaved history if you need context
         whiteBoard,
