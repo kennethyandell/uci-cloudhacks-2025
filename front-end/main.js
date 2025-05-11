@@ -29,24 +29,19 @@ function addAIMessage(text) {
 
 // Hook up your “Send” button:
 // ───────────────────────────────────────────────────
-document.getElementById('sendChatBtn').addEventListener('click', () => {
+document.getElementById('sendChatBtn').addEventListener('click', async () => {
   const inputEl = document.getElementById('chatInput');
   const text = inputEl.value.trim();
   if (!text) return;
 
-  // 1) store user text
-  userMessages.push(text);                      // ← stored in userMessages
-  allMessages.push({ sender: 'user', text });   // ← stored in allMessages
-
-  // 2) render to UI
+  // store & render user text
+  userMessages.push(text);
+  allMessages.push({ sender: 'user', text });
   renderMessage('user', text);
-
-  // 3) clear input
   inputEl.value = '';
 
-  // 4) YOUR CHATBOT INTEGRATION:
-  //    call your bot here, then when it responds do:
-  //      addAIMessage(botReply);
+  // now hit your Lambda
+  await sendToLambda();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -87,12 +82,6 @@ function onOrganizeIdeas(evt) {
   // TODO: implement organizeIdeas()
 }
 
-function onUserChatSend(evt) {
-  const chat = document.getElementById('chatInput').value;
-  console.log('Sent Message → chat:', chat);
-  chatBoxUse(chat);
-}
-
 function requestGenerateIdea(prompt) {
     const whiteBoard = document.getElementById('canvas-svg').outerHTML
     const apiUrl = 'https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude';
@@ -116,27 +105,21 @@ function requestGenerateIdea(prompt) {
     .then(json => console.log('API response:', json))
     .catch(err => console.error('API error:', err));
 }
-
-function chatBoxUse(prompt) {
-    const chatBox = document.getElementById(userMessages)
-    const apiUrl = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
-    const data = {
-        "chatBox": chatBox
-    };
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
-            'Access-Control-Request-Method': '*'
-    },
-    body: JSON.stringify(data)
-  };
-
-  console.log(data)
-  fetch(apiUrl, requestOptions)
-    .then(res => res.json())
-    .then(json => console.log('API response:', json))
-    .catch(err => console.error('API error:', err));
+const LAMBDA_URL = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
+async function chatBoxUse() {
+  try {
+    const resp = await fetch(LAMBDA_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userMessages,   // ← your array of user texts
+        allMessages,    // ← interleaved history if you need context
+      })
+    });
+    const { reply } = await resp.json();
+    addAIMessage(reply);  // ← reuses your UI helper
+  } catch (err) {
+    console.error('Lambda error', err);
+  }
 }
+
