@@ -162,7 +162,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 240px);
+  height: 66vh;
   border: none;
   border-radius: 8px;
   background: #fff;
