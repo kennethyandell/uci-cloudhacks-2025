@@ -8,14 +8,12 @@ const addBtn  = document.getElementById('add-note-btn');
   const style = document.createElement('style');
   style.textContent = `
     .sticky-note.shake {
-      animation: shake 0.3s infinite;
+      animation: iphone-jiggle 0.12s infinite alternate;
+      transform-origin: center center;
     }
-    @keyframes shake {
-      0%   { transform: translate(0,0) rotate(0deg); }
-      25%  { transform: translate(-2px,0) rotate(-1deg); }
-      50%  { transform: translate(2px,0) rotate(1deg); }
-      75%  { transform: translate(-2px,0) rotate(-1deg); }
-      100% { transform: translate(0,0) rotate(0deg); }
+    @keyframes iphone-jiggle {
+      0%   { transform: rotate(-1.5deg); }
+      100% { transform: rotate(1.5deg); }
     }
   `;
   document.head.appendChild(style);

@@ -53,6 +53,7 @@ function requestGenerateIdea(prompt) {
     body: JSON.stringify(data)
   };
 
+  console.log(data)
   fetch(apiUrl, requestOptions)
     .then(res => res.json())
     .then(json => console.log('API response:', JSON.stringify(json, null, 2)))
