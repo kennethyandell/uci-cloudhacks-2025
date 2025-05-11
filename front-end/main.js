@@ -118,7 +118,7 @@ function requestGenerateIdea(prompt) {
 }
 
 function chatBoxUse(prompt) {
-    const chatBox = document.getElementById('chatInput')
+    const chatBox = document.getElementById(userMessages)
     const apiUrl = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
     const data = {
         "chatBox": chatBox
