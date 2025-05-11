@@ -44,13 +44,13 @@ function onOrganizeIdeas(evt) {
 }
 
 function requestGenerateIdea() {
-    const apiUrl = "https://64bbb6ahce.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude";
+    const apiUrl = "https://em400q21z9.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude";
     const data = {}
     const requestOptions = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': "https://64bbb6ahce.execute-api.us-west-2.amazonaws.com/"
+            'Access-Control-Allow-Origin': "em400q21z9.execute-api.us-west-2.amazonaws.com",
         },
         body: JSON.stringify(data),
     }
