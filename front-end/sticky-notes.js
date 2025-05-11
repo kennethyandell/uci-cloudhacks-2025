@@ -38,7 +38,7 @@ let trashcanFO = null;
   div.style.height = '100%';
   div.style.display = 'flex';
   div.style.alignItems = 'center';
-  div.style.justifyContent = 'center';
+  div.style.justifyContent = 'space-between';
 
   const icon = document.createElement('i');
   icon.classList.add('fa-solid', 'fa-trash-can');
@@ -49,7 +49,28 @@ let trashcanFO = null;
   trashcanFO.appendChild(div);
   canvas.appendChild(trashcanFO);
 })();
+// 1) helper to recalc X
+function repositionTrashcan() {
+  const size    = 60;   // match your trashcan size
+  const padding = 10;   // same padding you used
+  const x       = canvas.clientWidth - size - padding;
+  trashcanFO.setAttribute('x', x);
+}
 
+// 2) on sidebar-tab clicks
+document.querySelectorAll('.sidebar .menu-item').forEach(item =>
+  item.addEventListener('click', () => {
+    // slight delay to let the layout settle
+    setTimeout(repositionTrashcan, 0);
+  })
+);
+
+// 3) on window resize (for mobile/orientation changes)
+window.addEventListener('resize', repositionTrashcan);
+
+// (Optional) 4) also snap it once immediately, in case the initial placement
+//     ran before your CSS fully applied:
+repositionTrashcan();
 // Greedy text wrapping
 function wrapTextGreedy(text, maxCharsPerLine) {
   const words = text.split(/\s+/);
