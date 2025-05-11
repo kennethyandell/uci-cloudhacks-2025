@@ -104,22 +104,15 @@ function requestGenerateIdea(prompt) {
     .then(json => {
       const output = json
       console.log(output)
-      // Parse the returned SVG string into a fresh element
-      const parser = new DOMParser();
-      const doc    = parser.parseFromString(output, 'image/svg+xml');
-      const newSvg = doc.documentElement;
+     // Assume `output` is a string of <g class="sticky-note">…</g> elements
+      const canvas = document.getElementById('canvas-svg');                           // :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
+      canvas.innerHTML = output;                                                       // swap children, not the element itself
 
-      // Ensure it carries the same ID & styling:
-      newSvg.setAttribute('id', 'canvas-svg');
-      newSvg.style.width  = '100%';
-      newSvg.style.height = '100%';
-
-      // Swap it in:
-      const oldSvg = document.getElementById('canvas-svg');
-      oldSvg.replaceWith(newSvg);
-
-      // Now re-wire up your observer and handlers on the new SVG:
-      initStickyNotes(newSvg);
+      // Let the existing observer pick up the new notes and call makeDraggable.
+      // Now re-bind the dblclick editor for each loaded note:
+      canvas.querySelectorAll('.sticky-note').forEach(note => {
+        note.addEventListener('dblclick', () => openNoteEditor(note));
+    });
     })
     .catch(err => console.error('API error:', err));
 

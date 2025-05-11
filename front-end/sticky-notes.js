@@ -249,20 +249,5 @@ function makeDraggable(el) {
   el.addEventListener('touchstart', startDrag);
 }
 
-function initStickyNotes(canvasEl = document.getElementById('canvas-svg')) {
-  // 1) re-attach the MutationObserver
-  observer.disconnect();
-  observer.observe(canvasEl, { childList: true });
-
-  // 2) bind dblclick → editor to any pre-existing notes
-  canvasEl.querySelectorAll('.sticky-note').forEach(note => {
-    note.addEventListener('dblclick', () => openNoteEditor(note));
-    makeDraggable(note);
-  });
-}
-
-// Run it once on load, and again after any full-SVG replacement
-initStickyNotes();
-
 // initial note
 createStickyNote();
