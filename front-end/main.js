@@ -36,24 +36,12 @@ function onOrganizeIdeas(evt) {
   // TODO: implement organizeIdeas()
 }
 
-function convertToPlain(html){
-
-    // Create a new div element
-    var tempDivElement = document.createElement("div");
-
-    // Set the HTML content with the given value
-    tempDivElement.innerHTML = html;
-
-    // Retrieve the text property of the element 
-    return tempDivElement.textContent || tempDivElement.innerText || "";
-}
-
 
 function requestGenerateIdea(prompt) {
-    const whiteBoard = document.getElementById('canvas-svg')
+    const whiteBoard = document.getElementById('canvas-svg').outerHTML
     const apiUrl = 'https://z97z0fx1md.execute-api.us-west-2.amazonaws.com/default/generate-ideas-claude';
     const data = {
-        "whiteboard": convertToPlain(whiteBoard)
+        "whiteboard": whiteBoard
     };
     const requestOptions = {
         method: 'POST',
