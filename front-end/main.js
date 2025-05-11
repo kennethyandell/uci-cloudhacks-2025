@@ -60,3 +60,27 @@ function requestGenerateIdea(prompt) {
     .then(json => console.log('API response:', json))
     .catch(err => console.error('API error:', err));
 }
+
+function chatBoxUse(prompt) {
+    const chatBox = document.getElementById('chat-input-container').outerHTML
+    const apiUrl = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
+    const data = {
+        "chatBox": chatBox
+    };
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
+            'Access-Control-Request-Method': '*'
+    },
+    body: JSON.stringify(data)
+  };
+
+  console.log(data)
+  fetch(apiUrl, requestOptions)
+    .then(res => res.json())
+    .then(json => console.log('API response:', json))
+    .catch(err => console.error('API error:', err));
+}
