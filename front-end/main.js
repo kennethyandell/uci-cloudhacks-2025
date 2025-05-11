@@ -5,6 +5,7 @@
 const userMessages = [];    // ← all user-typed messages
 const aiMessages   = [];    // ← all AI replies
 const allMessages  = [];    // ← interleaved { sender, text } records
+const origin = window.location;
 
 // Utility to render into the chat box:
 function renderMessage(sender, text) {
@@ -92,7 +93,7 @@ function requestGenerateIdea(prompt) {
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
+            'origin': origin,
             'Access-Control-Request-Method': '*'
     },
     body: JSON.stringify(data)
@@ -133,7 +134,7 @@ function chatBoxUse(prompt) {
         headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*',
-            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
+            'origin': origin,
             'Access-Control-Request-Method': '*'
     },
     body: JSON.stringify(data)
