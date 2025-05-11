@@ -41,7 +41,7 @@ document.getElementById('sendChatBtn').addEventListener('click', async () => {
   inputEl.value = '';
 
   // now hit your Lambda
-  await sendToLambda();
+  await chatBoxUse();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // — Subpage button handlers —
-  document.getElementById('sendChatBtn').addEventListener('click', onUserChatSend)
   document.getElementById('generateIdeaBtn').addEventListener('click', onGenerateIdea);
   document.getElementById('guideMeBtn').addEventListener('click', onGuideMe);
   document.getElementById('organizeIdeasBtn').addEventListener('click', onOrganizeIdeas);
