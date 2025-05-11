@@ -107,7 +107,7 @@ function requestGenerateIdea(prompt) {
      // Assume `output` is a string of <g class="sticky-note">…</g> elements
       const canvas = document.getElementById('canvas-svg');                           // :contentReference[oaicite:0]{index=0}:contentReference[oaicite:1]{index=1}
       canvas.innerHTML = output;                                                       // swap children, not the element itself
-
+      
       // Let the existing observer pick up the new notes and call makeDraggable.
       // Now re-bind the dblclick editor for each loaded note:
       canvas.querySelectorAll('.sticky-note').forEach(note => {
