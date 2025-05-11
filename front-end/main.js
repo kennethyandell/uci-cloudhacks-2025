@@ -47,7 +47,7 @@ function requestGenerateIdea(prompt) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com',
             'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
             'Access-Control-Request-Method': '*'
     },
