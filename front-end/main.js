@@ -57,6 +57,6 @@ function requestGenerateIdea(prompt) {
   console.log(data)
   fetch(apiUrl, requestOptions)
     .then(res => res.json())
-    .then(json => console.log('API response:', json))
+    .then(json => console.log('API response:', json.body))
     .catch(err => console.error('API error:', err));
 }
