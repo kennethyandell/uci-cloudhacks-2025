@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // — Subpage button handlers —
+  document.getElementById('sendChatBtn').addEventListener('click', onUserChatSend)
   document.getElementById('generateIdeaBtn').addEventListener('click', onGenerateIdea);
   document.getElementById('guideMeBtn').addEventListener('click', onGuideMe);
   document.getElementById('organizeIdeasBtn').addEventListener('click', onOrganizeIdeas);
@@ -36,6 +37,11 @@ function onOrganizeIdeas(evt) {
   // TODO: implement organizeIdeas()
 }
 
+function onUserChatSend(evt) {
+  const chat = document.getElementById('chatInput').value;
+  console.log('Sent Message → chat:', chat);
+  chatBoxUse(chat);
+}
 
 function requestGenerateIdea(prompt) {
     const whiteBoard = document.getElementById('canvas-svg').outerHTML
@@ -62,7 +68,7 @@ function requestGenerateIdea(prompt) {
 }
 
 function chatBoxUse(prompt) {
-    const chatBox = document.getElementById('chat-input-container').outerHTML
+    const chatBox = document.getElementById('chatMessages').outerHTML
     const apiUrl = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
     const data = {
         "chatBox": chatBox
