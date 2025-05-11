@@ -123,6 +123,7 @@ function requestGenerateIdea(prompt) {
 }
 const LAMBDA_URL = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
 async function chatBoxUse() {
+  const whiteBoard = document.getElementById('canvas-svg').outerHTML
   try {
     const resp = await fetch(LAMBDA_URL, {
       method: 'POST',
@@ -130,6 +131,7 @@ async function chatBoxUse() {
       body: JSON.stringify({
         userMessages,   // ← your array of user texts
         allMessages,    // ← interleaved history if you need context
+        whiteBoard,
       })
     });
     const { reply } = await resp.json();
