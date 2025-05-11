@@ -251,21 +251,3 @@ function makeDraggable(el) {
 
 // initial note
 createStickyNote();
-// — watch the canvas for new sticky notes (e.g. ones your AWS/Lambda code injected)
-//   and re-bind the drag handlers automatically —
-const observer = new MutationObserver(mutations => {
-  for (const { addedNodes } of mutations) {
-    addedNodes.forEach(node => {
-      if (
-        node.nodeType === Node.ELEMENT_NODE &&
-        node.classList.contains('sticky-note')
-      ) {
-        makeDraggable(node);
-      }
-    });
-  }
-});
-
-// now start observing; any time someone does canvas.appendChild(...) or 
-// innerHTML = ..., you'll get a chance to re-attach dragging.
-observer.observe(canvas, { childList: true });
