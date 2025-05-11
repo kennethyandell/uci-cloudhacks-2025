@@ -103,10 +103,10 @@ function requestGenerateIdea(prompt) {
     .then(res => res.json())
     .then(json => {
       const output = json
+      console.log(output)
+      document.getElementById('canvas-svg').outerHTML = output
     })
     .catch(err => console.error('API error:', err));
-  
-    document.getElementById('canvas-svg').outerHTML = output
 
   
 
