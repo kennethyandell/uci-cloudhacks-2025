@@ -50,7 +50,10 @@ function requestGenerateIdea() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            // "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Origin": "*",
+            'origin': 'https://main.d1zfh5jl8g0um5.amplifyapp.com/',
+            "Access-Control-Request-Method": "*"
+
         },
         body: JSON.stringify(data),
     }
