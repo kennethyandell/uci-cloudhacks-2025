@@ -1,3 +1,6 @@
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const canvas = document.getElementById('canvas-svg');
+const addBtn = document.getElementById('add-note-btn');
 document.addEventListener('DOMContentLoaded', () => {
     // Cache menu items and pages
     const menuItems = document.querySelectorAll('.sidebar .menu-item');
@@ -20,10 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`${item.textContent} → ${target}`);
     })
   });
-
-    // Your existing button logic
-    document.getElementById('actionBtn')
-        .addEventListener('click', () => alert('Button clicked!'));
 });
 
 // Placeholder handlers — replace with real logic later:
@@ -77,3 +76,57 @@ document.querySelectorAll('.menu-item').forEach(item => {
     if (page) page.classList.add('active');
   });
 });
+
+function createStickyNote() {
+  const note = document.createElementNS(SVG_NS, 'svg');
+  note.setAttribute('class', 'sticky-note');
+  note.setAttribute('x', 50);  // initial position
+  note.setAttribute('y', 50);
+  note.setAttribute('width', 150);
+  note.setAttribute('height', 150);
+
+  const rect = document.createElementNS(SVG_NS, 'rect');
+  rect.setAttribute('width', 150);
+  rect.setAttribute('height', 150);
+  rect.setAttribute('fill', '#fff59d');
+  rect.setAttribute('stroke', '#fbc02d');
+  note.appendChild(rect);
+
+  canvas.appendChild(note);
+  makeDraggable(note);
+}
+
+addBtn.addEventListener('click', createStickyNote);
+
+function makeDraggable(el) {
+  let offsetX, offsetY;
+  const startDrag = e => {
+    e.preventDefault();
+    const pt = canvas.createSVGPoint();
+    pt.x = (e.touches ? e.touches[0].clientX : e.clientX);
+    pt.y = (e.touches ? e.touches[0].clientY : e.clientY);
+    const svgP = pt.matrixTransform(canvas.getScreenCTM().inverse());
+    offsetX = svgP.x - +el.getAttribute('x');
+    offsetY = svgP.y - +el.getAttribute('y');
+    window.addEventListener('mousemove', onDrag);
+    window.addEventListener('touchmove', onDrag);
+    window.addEventListener('mouseup', endDrag);
+    window.addEventListener('touchend', endDrag);
+  };
+  const onDrag = e => {
+    const pt = canvas.createSVGPoint();
+    pt.x = (e.touches ? e.touches[0].clientX : e.clientX);
+    pt.y = (e.touches ? e.touches[0].clientY : e.clientY);
+    const svgP = pt.matrixTransform(canvas.getScreenCTM().inverse());
+    el.setAttribute('x', svgP.x - offsetX);
+    el.setAttribute('y', svgP.y - offsetY);
+  };
+  const endDrag = () => {
+    window.removeEventListener('mousemove', onDrag);
+    window.removeEventListener('touchmove', onDrag);
+    window.removeEventListener('mouseup', endDrag);
+    window.removeEventListener('touchend', endDrag);
+  };
+  el.addEventListener('mousedown', startDrag);
+  el.addEventListener('touchstart', startDrag);
+}
