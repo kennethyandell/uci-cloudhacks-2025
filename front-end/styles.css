@@ -10,6 +10,9 @@ body {
 	font-family: Arial, sans-serif;
 }
 
+.chatbox {
+  width: 100%;
+}
 /* Container sets up the side-by-side layout */
 .container {
 	display: flex;
@@ -94,7 +97,7 @@ body {
 
 .subpage-input {
   display: block;
-  width: 80%;
+  width: 100%;
   margin: 10px auto 30px;   /* a bit of space below */
   padding: 8px;
   border: 1px solid #bbb;
