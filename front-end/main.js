@@ -123,7 +123,7 @@ function requestGenerateIdea(prompt) {
 
 }
 const LAMBDA_URL = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
-function requestGenerateIdea(prompt) {
+function chatBoxUse(prompt) {
     const whiteBoard = document.getElementById('canvas-svg').outerHTML
     const apiUrl = 'https://4rygkzqfcj.execute-api.us-west-2.amazonaws.com/default/claudeChatBox';
     const data = {
