@@ -1,5 +1,5 @@
 // draw-mode.js
-// Implements Draw Mode features: draggable headers, intuitive line drawing, header placement, and sticky-note color selection
+// Implements Draw Mode features: draggable headers, intuitive line drawing, header placement, sticky-note selection indicator, and color selection
 
 document.addEventListener('DOMContentLoaded', () => {
   const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Header-dragging state
   let draggingEl = null;
   let dragOffset = { x: 0, y: 0 };
+
+  // Currently selected sticky note
+  let selectedNote = null;
 
   // --- Helper functions ---
   function getMousePos(e) {
@@ -71,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
   lineToolBtn.addEventListener('click', () => {
     lineToolActive = !lineToolActive;
     lineToolBtn.classList.toggle('active', lineToolActive);
-    // cancel any drawing in progress
     if (!lineToolActive && previewLine) {
       canvas.removeChild(previewLine);
       previewLine = null;
@@ -120,13 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Canvas: mousemove updates dragging or preview line
   canvas.addEventListener('mousemove', e => {
     const { x, y } = getMousePos(e);
-
     if (draggingEl) {
       draggingEl.setAttribute('x', x - dragOffset.x);
       draggingEl.setAttribute('y', y - dragOffset.y);
       return;
     }
-
     if (lineToolActive && isDrawing && previewLine) {
       previewLine.setAttribute('x2', x);
       previewLine.setAttribute('y2', y);
@@ -136,12 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Canvas: mouseup finalizes drag or line
   canvas.addEventListener('mouseup', e => {
     const { x, y } = getMousePos(e);
-
     if (draggingEl) {
       draggingEl = null;
       return;
     }
-
     if (lineToolActive && isDrawing) {
       isDrawing = false;
       canvas.removeChild(previewLine);
@@ -173,29 +171,34 @@ document.addEventListener('DOMContentLoaded', () => {
       textEl.setAttribute('cursor', 'move');
       textEl.textContent = headerTextInput.value;
       canvas.appendChild(textEl);
-      // reset header mode
       addingHeader = false;
       addHeaderBtn.textContent = 'Add Header';
       headerTextInput.value = '';
       return;
     }
 
-    // Sticky note selection
+    // Sticky note selection indicator
     const noteEl = e.target.closest('.sticky-note');
     if (noteEl) {
-      // Deselect previous
-      document.querySelectorAll('.sticky-note.selected')
-        .forEach(n => n.classList.remove('selected'));
+      // Deselect previous notes
+      document.querySelectorAll('.sticky-note.selected').forEach(n => {
+        n.classList.remove('selected');
+        const r = n.querySelector('rect');
+        r.removeAttribute('stroke');
+        r.removeAttribute('stroke-width');
+      });
+      // Select this note
       noteEl.classList.add('selected');
       selectedNote = noteEl;
+      const rectNode = noteEl.querySelector('rect');
+      rectNode.setAttribute('stroke', '#333');
+      rectNode.setAttribute('stroke-width', '3');
       // Sync color picker
-      const rectNode = selectedNote.querySelector('rect');
       colorPicker.value = rgbToHex(rectNode.getAttribute('fill'));
     }
   });
 
-  // Color picker changes selected note
-  let selectedNote = null;
+  // Color picker: apply to selected note
   colorPicker.addEventListener('input', () => {
     if (selectedNote) {
       const rectNode = selectedNote.querySelector('rect');
