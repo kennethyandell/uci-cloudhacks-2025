@@ -4,11 +4,11 @@ Clone or fork the repository and import it into AWS Amplify. Leave all default p
 Alternatively if set up fails, use [our Amplify domain](https://main.d1zfh5jl8g0um5.amplifyapp.com/).
 
 # Tech Stack
-- Front-end: Vanilla HTML/JS/CSS (with Generative AI)
-- Back-end: AWS Lambda
-- Deployment: AWS Amplify
-- Models & APIs Used: Anthropic Claude Haiku 3.5 (via AWS Bedrock)
+- **Front-end**: Vanilla HTML/JS/CSS (with Generative AI)
+- **Back-end**: AWS Lambda
+- **Deployment**: AWS Amplify
+- **Models & APIs Used**: Anthropic Claude Haiku 3.5 (via AWS Bedrock)
 
 # Contributions
-- Kenneth Yandell: Front-end, Prototyping, User analysis
-- Timmy Phan: Back-end, Prototyping, documentation
+- **Kenneth Yandell**: Front-end, Prototyping, User analysis
+- **Timmy Phan**: Back-end, Prototyping, documentation
